@@ -1,5 +1,6 @@
 package etu.demo.security.services;
 
+import etu.demo.domain.Joueur;
 import etu.demo.domain.Utilisateur;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,17 +23,17 @@ public class UserDetailsImpl implements UserDetails {
     @JsonIgnore
     private String password;
 
-    private int nPhrase;
+
 
     private Collection<? extends GrantedAuthority> authorities;
-
-    public UserDetailsImpl(long id, String pseudo, String email, String password, int nPhrase, Collection<? extends GrantedAuthority> authorities) {
+    private Joueur joueur;
+    public UserDetailsImpl(long id, String pseudo, String email, String password, Collection<? extends GrantedAuthority> authorities ,Joueur joueur) {
         this.id = id;
         this.pseudo = pseudo;
         this.email = email;
         this.password = password;
-        this.nPhrase = nPhrase;
         this.authorities = authorities;
+        this.joueur = joueur;
     }
 
 
@@ -47,8 +48,8 @@ public class UserDetailsImpl implements UserDetails {
                 utilisateur.getPseudo(),
                 utilisateur.getEmail(),
                 utilisateur.getPassword(),
-                utilisateur.getN_phrase(),
-                authorities);
+                authorities,
+                utilisateur.getJoueur());
 
     }
     @Override
@@ -74,11 +75,7 @@ public class UserDetailsImpl implements UserDetails {
     {
         return email;
     }
-    public int getNdePhrase()
-    {
-        return nPhrase;
-    }
-
+   public Joueur getJoueur() {return joueur;}
     @Override
     public boolean isAccountNonExpired() {
         return true;

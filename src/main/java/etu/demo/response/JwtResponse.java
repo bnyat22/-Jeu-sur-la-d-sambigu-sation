@@ -1,5 +1,6 @@
 package etu.demo.response;
 
+import etu.demo.domain.Joueur;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,13 +17,15 @@ public class JwtResponse {
     private String email;
     private int NdePhrase;
     private List<String> roles;
+    private Joueur jouer;
 
-    public JwtResponse(String token, long id, String pseudo, String email, int ndePhrase, List<String> roles) {
+    public JwtResponse(String token, long id, String pseudo, String email, int ndePhrase, List<String> roles,Joueur joueur) {
         this.token = token;
         this.id = id;
         this.pseudo = pseudo;
         this.email = email;
         NdePhrase = ndePhrase;
         this.roles = roles;
+        this.jouer = joueur;
     }
 }

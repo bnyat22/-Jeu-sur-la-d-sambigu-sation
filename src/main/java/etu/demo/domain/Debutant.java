@@ -8,6 +8,6 @@ import javax.persistence.Table;
 
 //@Entity
 //@Table(name = "debutant")
-@Data
-public class Debutant extends Joueur {
+//@Data
+public class Debutant  {
 }

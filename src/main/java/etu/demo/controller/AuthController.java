@@ -1,10 +1,7 @@
 package etu.demo.controller;
 
-import etu.demo.domain.ERoles;
-import etu.demo.domain.Role;
-import etu.demo.domain.Utilisateur;
-import etu.demo.repository.RoleRepository;
-import etu.demo.repository.UtilisateurRepository;
+import etu.demo.domain.*;
+import etu.demo.repository.*;
 import etu.demo.request.LoginRequest;
 import etu.demo.request.SignupRequest;
 import etu.demo.response.JwtResponse;
@@ -12,6 +9,8 @@ import etu.demo.response.MessageReponse;
 import etu.demo.security.jwt.JwtUtils;
 import etu.demo.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,17 +18,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@RestController
+@Controller
 @RequestMapping("/auth")
 public class AuthController {
     @Autowired
@@ -43,8 +43,13 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    JoueurRepository joueurRepository;
+    @Autowired
+    PhraseRepository phraseRepository;
+
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUtilisateur(@RequestBody LoginRequest loginRequest)
+    public String authenticateUtilisateur(@RequestBody LoginRequest loginRequest)
     {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getPseudo() , loginRequest.getPassword()));
@@ -56,18 +61,23 @@ public class AuthController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt ,
-                userDetails.getId(),
-                userDetails.getUsername() ,
-                userDetails.getEmail() ,
-                userDetails.getNdePhrase(),
-                roles));
+        return "index";
+                /*ResponseEntity.ok(new JwtResponse(jwt , userDetails.getId()
+        ,userDetails.getUsername() ,
+                userDetails.getPassword()
+        ,userDetails.getNdePhrase(),
+                roles,
+                userDetails.getJoueur()));*/
 
     }
-
-    @PostMapping("/signup")
-    public ResponseEntity<?> engistrerUtilisateur(@RequestBody SignupRequest signupRequest)
+    @GetMapping("/phras")
+    private List<Phrase> getPhrase()
     {
+
+        return phraseRepository.findAll();
+    }
+    @PostMapping("/signup")
+    public ResponseEntity<?> engistrerUtilisateur(@RequestBody SignupRequest signupRequest, Model model) throws URISyntaxException {
         if (utilisateurRepository.existsByPseudo(signupRequest.getPseudo()))
         {
             return ResponseEntity.badRequest()
@@ -90,6 +100,12 @@ public class AuthController {
         utilisateur.setRoles(roles);
 
         utilisateurRepository.save(utilisateur);
-        return ResponseEntity.ok(new MessageReponse("Vous êtes  engistré!"));
+        Joueur joueur = new Joueur(utilisateur);
+        joueurRepository.save(joueur);
+
+        URI home = new URI("http://localhost:9656/");
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(home);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
     }
 }

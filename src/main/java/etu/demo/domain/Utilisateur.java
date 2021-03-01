@@ -40,7 +40,14 @@ public class Utilisateur {
      inverseJoinColumns = @JoinColumn(name = "role_id"))
      private Set<Role> roles = new HashSet<>();
 
-    private int n_phrase;
+
+
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "utilisateur")
+    @PrimaryKeyJoinColumn
+    private Joueur joueur;
+
 
   public Utilisateur() {
   }
@@ -49,7 +56,6 @@ public class Utilisateur {
     this.pseudo = pseudo;
     this.email = email;
     this.password = password;
-    this.n_phrase = 0;
   }
 
 

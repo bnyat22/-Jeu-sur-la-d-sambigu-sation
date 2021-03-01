@@ -1,6 +1,6 @@
 package etu.demo;
 
-import etu.demo.domain.Phrase;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
