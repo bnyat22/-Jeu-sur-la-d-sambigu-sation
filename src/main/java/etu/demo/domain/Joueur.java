@@ -1,5 +1,6 @@
 package etu.demo.domain;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Joueur {
 
     @Id
@@ -28,7 +30,10 @@ public class Joueur {
     @JoinColumn(name = "user_id", nullable = false)
     private Utilisateur utilisateur;
 
-    private int nPhrase;
+
+
+
+
     public Joueur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
      point = 0;

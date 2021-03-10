@@ -1,12 +1,14 @@
 package etu.demo.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+
 
 @Data
 @Entity
@@ -27,21 +29,20 @@ public class Phrase {
 
     @ManyToOne
     @JoinColumn(name = "jouer_id" , nullable = false)
-    private Joueur joueur;
+    private Expert expert;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "phrase_mot",
             joinColumns = @JoinColumn(name = "phrase_id") ,
             inverseJoinColumns = @JoinColumn(name = "mot_id"))
-
-    private Set<MotAmbigu> mot_id = new HashSet<>();
-
+    private List<MotAmbigu> mot_id = new ArrayList<>();
 
 
-    public Phrase(String phrase, Joueur joueur) {
+
+    public Phrase(String phrase, Expert expert) {
         this.phrase = phrase;
         this.niveau = "niveau A";
-        this.joueur = joueur;
+        this.expert = expert;
         this.nbJouer = 0;
     }
 

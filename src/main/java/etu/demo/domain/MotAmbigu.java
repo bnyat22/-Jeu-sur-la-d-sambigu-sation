@@ -28,5 +28,23 @@ public class MotAmbigu {
     this.mot = mot;
     this.choix1 = choix1;
   }
+  public MotAmbigu(String mot , String choix1 , String choix2) {
+    this.mot = mot;
+    this.choix1 = choix1;
+    this.choix2 = choix2;
+  }
+  public MotAmbigu(String mot , String choix1 , String choix2 ,String choix3) {
+    this.mot = mot;
+    this.choix1 = choix1;
+    this.choix2 = choix2;
+    this.choix3 = choix3;
+  }
+  public MotAmbigu(String mot , String choix1 , String choix2 ,String choix3,String choix4) {
+    this.mot = mot;
+    this.choix1 = choix1;
+    this.choix2 = choix2;
+    this.choix3 = choix3;
+    this.choix4 = choix4;
+  }
 
 }

@@ -1,13 +1,8 @@
 package etu.demo.controller;
 
-import etu.demo.domain.Joueur;
-import etu.demo.domain.MotAmbigu;
-import etu.demo.domain.Phrase;
-import etu.demo.domain.Points;
-import etu.demo.repository.JoueurRepository;
-import etu.demo.repository.MotAmbiguRepository;
-import etu.demo.repository.PhraseRepository;
-import etu.demo.repository.PointsRepository;
+import etu.demo.domain.*;
+import etu.demo.repository.*;
+import etu.demo.response.QuestionReponse;
 import etu.demo.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,67 +27,105 @@ public class MainController {
     private PointsRepository pointsRepository;
     @Autowired
      private JoueurRepository joueurRepository;
+  //  @Autowired
+    //        private RankRepository rankRepository;
+    @Autowired
+            private ExpertRepository expertRepository;
 
-   List<Phrase> questions;
+   List<Object[]> questions;
    int currentIndex;
 
-   public boolean checkCredit(Joueur joueur)
+   public boolean checkCredit(Expert expert)
    {
 
-       if (joueur.getCredit()<30)
+       if (expert.getCredit()<30)
            return false;
       else
           return true;
    }
-    @PostMapping("/ajouterPhrase/{phrase}/point/{point}")
-  //  @PreAuthorize("hasRole('ADMIN')")
-    public Points addPhrase(@PathVariable(value = "phrase") String phrase , @PathVariable(value = "point") int point, @RequestBody MotAmbigu mot)
+   private void ajouterPoints(Phrase phrase , List<MotAmbigu> mots , List<Integer> points ,Expert expert)
+   {
+       for (MotAmbigu mot: mots) {
+           if (mot == null)
+               return;
+           Points point;
+            point = new Points(phrase, mot, points.get(0));
+            if (points.get(1) !=null)
+               point = new Points(phrase, mot, points.get(0) , points.get(1));
+           else   if (points.get(2) !=null)
+               point = new Points(phrase, mot, points.get(0) , points.get(1),points.get(2));
+           else   if (points.get(3) !=null)
+               point = new Points(phrase, mot, points.get(0) , points.get(1),points.get(2), points.get(3));
+           motAmbiguRepository.save(mot);
+           pointsRepository.save(point);
+           expert.setNbGloses(expert.getNbGloses() + 1);
+       }
+   }
+    @PostMapping("/ajouterPhrase/{phrase}/{point}")
+    @PreAuthorize("hasRole('ADMIN') or ('JOUEUR_EXPERT')")
+    @ResponseBody
+    public String addPhrase(@PathVariable(value = "phrase") String phrase
+            , @PathVariable(value = "point") List<Integer> points, @RequestBody List<MotAmbigu> mots)
     {
-        Joueur joueur  = joueurRepository.getById(getUserId());
-        if (!checkCredit(joueur))
+        Expert expert  = expertRepository.getById(getUserId());
+        if (!checkCredit(expert))
           return null;
-        Phrase p = new Phrase(phrase , joueur);
-        Set<MotAmbigu> mots = new HashSet<>();
-        mots.add(mot);
+        Phrase p = new Phrase(phrase , expert);
         p.setMot_id(mots);
-        Points points = new Points(p , mot , point);
-        motAmbiguRepository.save(mot);
+        ajouterPoints(p , mots , points , expert);
         phraseRepository.save(p);
-        pointsRepository.save(points);
-        joueur.setNPhrase(joueur.getNPhrase()+1);//quand ce joeur ajoute une phrase son nombre de phrase ajoutée augemente
-
-        joueurRepository.save(joueur);
-        return points;
+        expert.setNbPhrases(expert.getNbPhrases()+1);//quand ce joeur ajoute une phrase son nombre de phrase ajoutée augemente
+        expertRepository.save(expert);
+        return "points";
 
     }
     @GetMapping("/commence")
-    public Phrase playGame()
+    public Object[] playGame()
     {
         questions = new ArrayList<>();
         currentIndex = 0;
-        questions = phraseRepository.findAll();
+        questions = phraseRepository.findPhras();
         Collections.shuffle(questions);
-        Phrase premiereQuestion = questions.get(currentIndex);
+        Object[] premiereQuestion = questions.get(currentIndex);
         currentIndex++;
         return premiereQuestion;
 
     }
     @GetMapping("/suivante")
-    public Phrase nextQuestion()
+    public Object nextQuestion()
     {
-        if (currentIndex >= questions.size())
-        return null;
-
-            Phrase question = questions.get(currentIndex);
+        if (currentIndex >= questions.size()) {
+            return null;
+        }
+            Object question = questions.get(currentIndex);
             currentIndex++;
-        return phraseRepository.getById(question.getId());
+        return question;
     }
+    @PostMapping("/ajouteGlose/{glose}")
+    @PreAuthorize("hasRole('ADMIN') or ('JOUEUR_INTERMIDAIRE') or ('JOUEUR_EXPERT')")
+    public String addGlose(@RequestBody MotAmbigu mot , @PathVariable(name = "glose") String glose)
+    {
+        if (mot.getChoix2() == null) {
+            mot.setChoix2(glose);
+            return "votre glose est ajouté";
+        }
 
+       else   if (mot.getChoix3() == null) {
+            mot.setChoix3(glose);
+            return "votre glose est ajouté";
+        }
+            else if (mot.getChoix4() == null) {
+            mot.setChoix4(glose);
+            return "votre glose est ajouté";
+        } else
+            return "Il n'y a pas de place à ajouter";
+
+    }
     @PostMapping("/choisir/{choix}")
     public void pickAnswer(@PathVariable String choix)
     {
-        Phrase phrase = questions.get(currentIndex-1);
-        Points points = pointsRepository.getPointsByPhrase_id(phrase.getId());
+       /* Phrase phrase = questions.get(currentIndex-1);
+     //   Points points = pointsRepository.getPointsByPhrase_id(phrase.getId());
         MotAmbigu motAmbigu = motAmbiguRepository.getById(points.getMotAmbigu_id().getId());
         long userId = getUserId();
         Joueur joueur = joueurRepository.getById(userId);
@@ -112,12 +145,12 @@ public class MainController {
         else {
             updatedPoint = joueur.getPoint() + points.getPoint_choix4();
             points.setNJouer_choix4(points.getNJouer_choix4()+1);
-        }
-
+        }*
+Intermédiaire intermédiaire = new Intermédiaire(joueur.getUtilisateur());
         joueur.setPoint(updatedPoint);
-        joueurRepository.save(joueur);
+        joueurRepository.save(intermédiaire);
         updatePoints(phrase.getId());
-        pointsRepository.save(points);
+        pointsRepository.save(points);*/
     }
     private long getUserId()
     {

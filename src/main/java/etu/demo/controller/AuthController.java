@@ -47,6 +47,8 @@ public class AuthController {
     JoueurRepository joueurRepository;
     @Autowired
     PhraseRepository phraseRepository;
+   // @Autowired
+  //  RankRepository rankRepository;
 
     @PostMapping("/signin")
     public String authenticateUtilisateur(@RequestBody LoginRequest loginRequest)
@@ -102,7 +104,9 @@ public class AuthController {
         utilisateurRepository.save(utilisateur);
         Joueur joueur = new Joueur(utilisateur);
         joueurRepository.save(joueur);
-
+Rank rank = new Rank();
+//rank.setJoueur(joueur);
+//rankRepository.save(rank);
         URI home = new URI("http://localhost:9656/");
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(home);

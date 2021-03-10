@@ -41,5 +41,36 @@ public class Points {
         this.point_choix1  = point_choix1;
         this.nJouer_choix1 = 0;
     }
+    public Points(Phrase phrase , MotAmbigu motAmbigu , int point_choix1 , int point_choix2) {
+        this.phrase = phrase;
+        motAmbigu_id = motAmbigu;
+        this.point_choix1  = point_choix1;
+        this.point_choix2  = point_choix2;
+        this.nJouer_choix1 = 0;
+        this.nJouer_choix2 = 0;
+    }
+    public Points(Phrase phrase , MotAmbigu motAmbigu , int point_choix1 , int point_choix2 , int point_choix3) {
+        this.phrase = phrase;
+        motAmbigu_id = motAmbigu;
+        this.point_choix1  = point_choix1;
+        this.point_choix2  = point_choix2;
+        this.point_choix3  = point_choix3;
+        this.nJouer_choix1 = 0;
+        this.nJouer_choix2 = 0;
+        this.nJouer_choix3 = 0;
+    }
+    public Points(Phrase phrase , MotAmbigu motAmbigu , int point_choix1 , int point_choix2 , int point_choix3 , int point_choix4) {
+        this.phrase = phrase;
+        motAmbigu_id = motAmbigu;
+        this.point_choix1  = point_choix1;
+        this.point_choix2  = point_choix2;
+        this.point_choix3  = point_choix3;
+        this.point_choix4  = point_choix4;
+        this.nJouer_choix1 = 0;
+        this.nJouer_choix2 = 0;
+        this.nJouer_choix3 = 0;
+        this.nJouer_choix4 = 0;
+    }
+
 
 }
