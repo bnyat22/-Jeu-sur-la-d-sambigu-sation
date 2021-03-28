@@ -19,13 +19,8 @@ public class JwtResponse {
     private List<String> roles;
     private Joueur jouer;
 
-    public JwtResponse(String token, long id, String pseudo, String email, int ndePhrase, List<String> roles,Joueur joueur) {
+    public JwtResponse(String token) {
         this.token = token;
-        this.id = id;
-        this.pseudo = pseudo;
-        this.email = email;
-        NdePhrase = ndePhrase;
-        this.roles = roles;
-        this.jouer = joueur;
+
     }
 }

@@ -31,10 +31,7 @@ public class Phrase {
     @JoinColumn(name = "jouer_id" , nullable = false)
     private Expert expert;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "phrase_mot",
-            joinColumns = @JoinColumn(name = "phrase_id") ,
-            inverseJoinColumns = @JoinColumn(name = "mot_id"))
+    @OneToMany(fetch = FetchType.LAZY)
     private List<MotAmbigu> mot_id = new ArrayList<>();
 
 
