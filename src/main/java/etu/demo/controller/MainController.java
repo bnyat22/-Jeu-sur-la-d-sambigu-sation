@@ -33,58 +33,13 @@ public class MainController {
     private JoueurRepository joueurRepository;
     @Autowired
     private UtilisateurRepository utilisateurRepository;
-    //  @Autowired
-    //        private RankRepository rankRepository;
     @Autowired
     private ExpertRepository expertRepository;
 
     List<Questions> questions;
     int currentIndex;
 
-    public boolean checkCredit(Expert expert) {
 
-        if (expert.getCredit() < 30)
-            return false;
-        else
-            return true;
-    }
-
-    private void ajouterPoints(Phrase phrase, List<MotAmbigu> mots, List<Integer> points, Expert expert) {
-        for (MotAmbigu mot : mots) {
-            if (mot == null)
-                return;
-            Points point;
-            point = new Points(phrase, mot, points.get(0));
-            if (points.get(1) != null)
-                point = new Points(phrase, mot, points.get(0), points.get(1));
-            else if (points.get(2) != null)
-                point = new Points(phrase, mot, points.get(0), points.get(1), points.get(2));
-            else if (points.get(3) != null)
-                point = new Points(phrase, mot, points.get(0), points.get(1), points.get(2), points.get(3));
-            motAmbiguRepository.save(mot);
-            pointsRepository.save(point);
-            expert.setNbGloses(expert.getNbGloses() + 1);
-        }
-    }
-
-    @PostMapping("/ajouterPhrase/{phrase}/{point}")
-    @PreAuthorize("hasRole('ADMIN') or ('JOUEUR_EXPERT')")
-    @ResponseBody
-    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    public String addPhrase(@PathVariable(value = "phrase") String phrase
-            , @PathVariable(value = "point") List<Integer> points, @RequestBody List<MotAmbigu> mots ) {
-        Expert expert = expertRepository.getById(getUserId());
-        if (!checkCredit(expert))
-            return null;
-        Phrase p = new Phrase(phrase, expert);
-        p.setMot_id(mots);
-        ajouterPoints(p, mots, points, expert);
-        phraseRepository.save(p);
-        expert.setNbPhrases(expert.getNbPhrases() + 1);//quand ce joeur ajoute une phrase son nombre de phrase ajoutée augemente
-        expertRepository.save(expert);
-        return "points";
-
-    }
 
     @GetMapping("/jeu")
     public String jouer(Model model) {
@@ -127,22 +82,7 @@ public class MainController {
         return "jouer";
     }
 
-    @PostMapping("/ajouteGlose/{glose}")
-    @PreAuthorize("hasRole('ADMIN') or ('JOUEUR_INTERMIDAIRE') or ('JOUEUR_EXPERT')")
-    public String addGlose(@RequestBody MotAmbigu mot, @PathVariable(name = "glose") String glose) {
-        if (mot.getChoix2() == null) {
-            mot.setChoix2(glose);
-            return "votre glose est ajouté";
-        } else if (mot.getChoix3() == null) {
-            mot.setChoix3(glose);
-            return "votre glose est ajouté";
-        } else if (mot.getChoix4() == null) {
-            mot.setChoix4(glose);
-            return "votre glose est ajouté";
-        } else
-            return "Il n'y a pas de place à ajouter";
 
-    }
 
     @PostMapping("/choisir")
     @ResponseStatus(value = HttpStatus.OK)

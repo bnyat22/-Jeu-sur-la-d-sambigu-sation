@@ -1,10 +1,7 @@
 package etu.demo.controller;
 
 
-import etu.demo.domain.Expert;
-import etu.demo.domain.Joueur;
-import etu.demo.domain.MotAmbigu;
-import etu.demo.domain.Phrase;
+import etu.demo.domain.*;
 import etu.demo.repository.JoueurRepository;
 import etu.demo.repository.MotAmbiguRepository;
 import etu.demo.repository.PhraseRepository;
@@ -13,6 +10,7 @@ import etu.demo.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +29,13 @@ public class Controller {
     @RequestMapping("/")
     public String index() {
         return "index";
+    }
+
+    @GetMapping("/getRank")
+    public List<Rank> getRanks(Model model)
+    {
+
+        return joueurRepository.getRank();
     }
 
     @PostMapping("/test")

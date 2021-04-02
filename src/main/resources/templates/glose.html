@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- awesone fonts css-->
     <link th:href="@{/css/font-awesome.css}" rel="stylesheet" type="text/css">
     <!-- owl carousel css-->
     <link rel="stylesheet" th:href="@{/owl-carousel/assets/owl.carousel.min.css}" type="text/css">
@@ -29,12 +30,8 @@
     <!-- owl stylesheets -->
     <link rel="stylesheet" th:href="@{/css2/owl.carousel.min.css}">
     <link rel="stylesheet" th:href="@{/css2/owl.theme.default.min.css}">
-	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-	<!-- owl stylesheets --> 
-	<link rel="stylesheet" th:href="@{css2/owl.carousel.min.css}">
-	<link rel="stylesheet" th:href="@{css2/owl.theme.default.min.css}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-    <title>Se connecter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <title>Inscription</title>
     <style>
 
     </style>
@@ -42,83 +39,76 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light bg-transparent" id="gtco-main-nav">
     <a class="navbar-brand">Ambiguss</a>
-    <br>
-    <a class="navbar-brand" th:text="*{jwt}"></a>
-        <button class="navbar-toggler" data-target="#my-nav" onclick="myFunction(this)" data-toggle="collapse"><span
-                class="bar1"></span> <span class="bar2"></span> <span class="bar3"></span></button>
-        <div id="my-nav" class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="#">Acceuil</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <a href="login" class="btn btn-outline-dark my-2 my-sm-0 mr-3 text-uppercase">Se connecter</a> <a href="#"
-                                                                                                       class="btn btn-info my-2 my-sm-0 text-uppercase">S'inscrire</a>
-            </form>
-        </div>
-    
+    <button class="navbar-toggler" data-target="#my-nav" onclick="myFunction(this)" data-toggle="collapse"><span
+            class="bar1"></span> <span class="bar2"></span> <span class="bar3"></span></button>
+    <div id="my-nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="#">Acceuil</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <a href="login" class="btn btn-outline-dark my-2 my-sm-0 mr-3 text-uppercase">Inscription</a> <a href="#"
+                                                                                                             class="btn btn-info my-2 my-sm-0 text-uppercase">S'inscrire</a>
+        </form>
+    </div>
+
 </nav>
 
 
- <div class="services_section">
+<div class="services_section">
     <div class="container">
-      <h1 class="services_text"></h1>
+        <h1 class="services_text">SERVICES</h1>
     </div>
-  </div>
+</div>
 <div class="login_section">
-		<div class="container">
-			<h1 class="best_taital">Jouons</h1>
-			 <div class="box_main">
-
-		    </div>
-		    <div class="section2" >
-		    <br>
-		   <h1 align="center" th:if="${question.get(0).getPhrase()}" th:utext="${question.get(0).getPhrase()}">..</h1>
-
-		   <div id="Global">
-		    <form class="form-control" th:action="@{/main/choisir}" th:object="${option}" method="post"  th:each="mot : ${question}">
-
-                <label type="text"  th:text="${mot.getMot()}">..</label>
-    <select hidden="hidden" th:field="*{word}" >
-        <option hidden="hidden" th:value="${mot.getMot()}" selected/>
-    </select>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-		    <select th:name="bni" th:field="*{Choix}" class="form-control">
-		    <option th:name="op1" th:each="choix : ${mot.getChoix()}"th:utext="${choix}" th:value="${choix}" >..</option>
-		    </select>
-
-
-                       <div class="discover_bt"><button type="submit" th:action="|window.location.href= '/main/choisir'|" >Valider</button></div>
-
-
-            </form>
-           </div>
-
-		    <br>
-		    <div class="bt_main">
-		    	<div class="discover_bt"><button th:onclick="|window.location.href= '/main/suivante'|" >Suivante</button></div>
-		    </div>
-
-		    <div class="services_section">
     <div class="container">
-      <h1 class="services_text"></h1>
-    </div>
-  </div>
-  <br><br>
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Formulaire d'inscription</h5>
+                        <form class="form-signin" method="post" th:action="@{/ajoute/ajouteGlose}" th:object="${glose}">
+                            <div class="form-label-group">
+                                <input type="text" id="phrase" class="form-control" placeholder="Phrase" th:field="*{phrase}"required autofocus>
+                                <label for="phrase">Mettre la phrase dans laquelle vous ajoutez la glose</label>
+                            </div>
+                            <div class="form-label-group">
+                                <input  type="text" id="mot" class="form-control" th:field="*{mot}" placeholder="Mot" required autofocus>
+                                <label for="mot">Mot au quel vous souhaitez ajouter la glose</label>
+                            </div>
 
-		</div>
-	</div>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                            <div class="form-label-group">
+                                <input type="text" id="option" class="form-control" th:field="*{glose} "placeholder="Glose" required>
+                                <label for="option">Glose</label>
+                            </div>
+                            <div class="form-label-group">
+                                <input type="text" id="po" class="form-control" th:field="*{point} "placeholder="Po" required>
+                                <label for="po">Point</label>
+                            </div>
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Ajouter</button>
+                            <hr class="my-4">
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid gtco-banner-area">
+</div>
+
 <div class="container-fluid gtco-news" id="news">
 
 
 
 </div>
+<div class="container-fluid gtco-news" id="news">
+
+
+
+</div>
+
 <footer class="container-fluid" id="gtco-footer">
     <div class="container">
         <div class="row">
@@ -150,9 +140,11 @@
                         </ul>
                     </div>
                     <div class="col-6">
-                       
+
                     </div>
-                 
+                    <div class="col-12">
+                        <p></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -176,37 +168,9 @@
 <script th:src="@{/js2/custom.js}"></script>
 <!-- javascript -->
 <script th:src="@{/js2/owl.carousel.js}"></script>
-      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
 
-    function createLocalstorageItem(txtJwtTokenValue) {
-        sessionStorage.setItem("jwtToken", txtJwtTokenValue);
-    }
 
-    function readValue() {
-        var jwtToken = sessionStorage.getItem("jwtToken");
-        console.log("jwtToken : "+jwtToken );
-        return jwtToken ;
+<script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
 
-    }
-
-    function getDataFromAPiByPassingJwtTokenInHeader(){
-        var jwtToken=readValue();
-        $.ajax({
-            url: 'http://localhost:9656/main/choisir',
-            type: 'post',
-            data: {},
-            headers: {
-                Bearer : "Bearer "+ jwtToken;  //key word **Bearer**  should pass before the token string
-            },
-            dataType: 'json',
-            success: function (data) {
-                console.info(data);
-            }
-        });
-    }
-
-</script>
 </body>
 </html>

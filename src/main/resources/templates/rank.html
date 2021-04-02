@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
@@ -29,23 +29,23 @@
     <!-- owl stylesheets -->
     <link rel="stylesheet" th:href="@{/css2/owl.carousel.min.css}">
     <link rel="stylesheet" th:href="@{/css2/owl.theme.default.min.css}">
-	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-	<!-- owl stylesheets --> 
-	<link rel="stylesheet" th:href="@{css2/owl.carousel.min.css}">
-	<link rel="stylesheet" th:href="@{css2/owl.theme.default.min.css}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-    <title>Se connecter</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <!-- owl stylesheets -->
+    <link rel="stylesheet" th:href="@{css2/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{css2/owl.theme.default.min.css}">
+    <title>Application</title>
     <style>
 
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light bg-transparent" id="gtco-main-nav">
-    <a class="navbar-brand">Ambiguss</a>
-    <br>
-    <a class="navbar-brand" th:text="*{jwt}"></a>
+    <div class="container"><a class="navbar-brand">Ambiguss</a>
+        <br>
+        <a class="navbar-brand" th:text="*{jwt}"></a>
         <button class="navbar-toggler" data-target="#my-nav" onclick="myFunction(this)" data-toggle="collapse"><span
                 class="bar1"></span> <span class="bar2"></span> <span class="bar3"></span></button>
+
         <div id="my-nav" class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" href="#">Acceuil</a></li>
@@ -53,69 +53,56 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <a href="login" class="btn btn-outline-dark my-2 my-sm-0 mr-3 text-uppercase">Se connecter</a> <a href="#"
-                                                                                                       class="btn btn-info my-2 my-sm-0 text-uppercase">S'inscrire</a>
+                                                                                                                  class="btn btn-info my-2 my-sm-0 text-uppercase">S'inscrire</a>
             </form>
         </div>
-    
+    </div>
 </nav>
-
-
- <div class="services_section">
+<div class="container-fluid gtco-banner-area">
     <div class="container">
-      <h1 class="services_text"></h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h1> Bienvenue dans
+                    notre <span>JEU D'ANNOTATION</span>  </h1>
+                <h3>"Un <span>avocat</span> se retrouve par terre"</h3>
+                <p> Parle-t-on du fruit, de l'homme ou d'autre chose ?</p>
+
+                <p>À vous de choisir en mettant le sens qui vous semble le plus approprié ;) </p>
+<div class="container">
+    <div th:if="${not #lists.isEmpty(ranks)}">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>User id</th>
+                                <th>Pseudo</th>
+                                <th>Point</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="rank : ${ranks}">
+                                <td th:text="${rank.getRank_upper()}"></td>
+                                <td th:text="${rank.getUser_id()}"></td>
+                                <td th:text="${rank.getPseudo()}"></td>
+                                <td th:text="${rank.getPoint()}"></td>
+
+                            </tr>
+                            </tbody>
+                        </table>
     </div>
-  </div>
-<div class="login_section">
-		<div class="container">
-			<h1 class="best_taital">Jouons</h1>
-			 <div class="box_main">
-
-		    </div>
-		    <div class="section2" >
-		    <br>
-		   <h1 align="center" th:if="${question.get(0).getPhrase()}" th:utext="${question.get(0).getPhrase()}">..</h1>
-
-		   <div id="Global">
-		    <form class="form-control" th:action="@{/main/choisir}" th:object="${option}" method="post"  th:each="mot : ${question}">
-
-                <label type="text"  th:text="${mot.getMot()}">..</label>
-    <select hidden="hidden" th:field="*{word}" >
-        <option hidden="hidden" th:value="${mot.getMot()}" selected/>
-    </select>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-		    <select th:name="bni" th:field="*{Choix}" class="form-control">
-		    <option th:name="op1" th:each="choix : ${mot.getChoix()}"th:utext="${choix}" th:value="${choix}" >..</option>
-		    </select>
-
-
-                       <div class="discover_bt"><button type="submit" th:action="|window.location.href= '/main/choisir'|" >Valider</button></div>
-
-
-            </form>
-           </div>
-
-		    <br>
-		    <div class="bt_main">
-		    	<div class="discover_bt"><button th:onclick="|window.location.href= '/main/suivante'|" >Suivante</button></div>
-		    </div>
-
-		    <div class="services_section">
-    <div class="container">
-      <h1 class="services_text"></h1>
+</div>
+            <div class="col-md-6">
+                <div class="card"><img class="card-img-top img-fluid" src="images/fini.png" alt=""></div>
+            </div>
+        </div>
     </div>
-  </div>
-  <br><br>
+</div>
 
-		</div>
-	</div>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+
+
 <div class="container-fluid gtco-news" id="news">
-
 
 
 </div>
@@ -150,14 +137,17 @@
                         </ul>
                     </div>
                     <div class="col-6">
-                       
+
                     </div>
-                 
+                    <div class="col-12">
+                        <p></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
+
 <script th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
@@ -176,37 +166,5 @@
 <script th:src="@{/js2/custom.js}"></script>
 <!-- javascript -->
 <script th:src="@{/js2/owl.carousel.js}"></script>
-      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-
-    function createLocalstorageItem(txtJwtTokenValue) {
-        sessionStorage.setItem("jwtToken", txtJwtTokenValue);
-    }
-
-    function readValue() {
-        var jwtToken = sessionStorage.getItem("jwtToken");
-        console.log("jwtToken : "+jwtToken );
-        return jwtToken ;
-
-    }
-
-    function getDataFromAPiByPassingJwtTokenInHeader(){
-        var jwtToken=readValue();
-        $.ajax({
-            url: 'http://localhost:9656/main/choisir',
-            type: 'post',
-            data: {},
-            headers: {
-                Bearer : "Bearer "+ jwtToken;  //key word **Bearer**  should pass before the token string
-            },
-            dataType: 'json',
-            success: function (data) {
-                console.info(data);
-            }
-        });
-    }
-
-</script>
 </body>
 </html>

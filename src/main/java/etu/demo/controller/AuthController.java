@@ -141,7 +141,7 @@ model.addAttribute("jwt" , userDetails.getUsername());
         utilisateurRepository.save(utilisateur);
         Joueur joueur = new Joueur(utilisateur);
         joueurRepository.save(joueur);
-Rank rank = new Rank();
+
 //rank.setJoueur(joueur);
 //rankRepository.save(rank);
         URI home = new URI("http://localhost:9656/");
