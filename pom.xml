@@ -10,9 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>etu</groupId>
-    <artifactId>demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>demo</name>
+    <artifactId>etu</artifactId>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>14</java.version>
@@ -79,6 +77,7 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
     </dependencies>
+
 
 
 
