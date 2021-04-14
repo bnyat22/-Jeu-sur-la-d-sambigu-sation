@@ -63,15 +63,7 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-        </dependency>
+
 
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
@@ -97,11 +89,6 @@
             <id>production</id>
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>etu</groupId>
-                        <artifactId>demo</artifactId>
-                        <version>0.0.1-SNAPSHOT</version>
-                    </plugin>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
