@@ -47,7 +47,7 @@
 
         <div id="my-nav" class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/auth/'|">Acceuil</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/'|">Acceuil</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|window.location.href= '/admin/'|">Admin</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
             </ul>
@@ -63,12 +63,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h1>Réussi</span>  </h1>
+                <h1>Félicitations</span>  </h1>
 
 
                 <p>Vous êtes arrivé à la fin il n'y a plus de questions veuillez retourez à la page d'acceuil ou voir votre nouveau placement dans la table Rank</p>
 
-                <a href="#" sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/rank/'|">Rank<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                <a href="#" sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/rank/get'|">Rank<i class="fa fa-angle-right" aria-hidden="true"></i></a>
                 <a href="#" sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/'|">Retounrez<i class="fa fa-angle-right" aria-hidden="true"></i></a>
             </div>
             <div class="col-md-6">

@@ -48,7 +48,7 @@
 
         <div id="my-nav" class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/auth/'|">Acceuil</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/'|">Acceuil</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|window.location.href= '/admin/'|">Admin</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
             </ul>
@@ -64,14 +64,9 @@
 <div class="container-fluid gtco-banner-area">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <h1> Bienvenue dans
-                    notre <span>JEU D'ANNOTATION</span>  </h1>
-                <h3>"Un <span>avocat</span> se retrouve par terre"</h3>
-                <p> Parle-t-on du fruit, de l'homme ou d'autre chose ?</p>
+            <div class="section2">
+                <h1> Gestion de Phrases</h1>
 
-                <p>À vous de choisir en mettant le sens qui vous semble le plus approprié ;) </p>
-                <div class="container">
                     <div th:if="${not #lists.isEmpty(allPhrases)}">
                         <table class="table table-striped">
                             <thead>
@@ -93,14 +88,20 @@
                                     <td th:text="${m.getChoix3()}"/>
                                     <td th:text="${m.getChoix4()}"/>
                                 </th:block>
+                                <td>
+                                    <form method="post" th:action="@{/admin/deletephrase}" th:object="${phrase}">
+                                        <select hidden="hidden" th:field="*{id}" >
+                                            <option hidden="hidden" th:value="${p.getPhrase_id()}" selected/>
+                                        </select>
+                                        <button class="btn btn-danger small rounded-circle fa fa-close" type="submit" />
+                                    </form>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card"><img class="card-img-top img-fluid" src="images/fini.png" alt=""></div>
-                </div>
+
+
             </div>
         </div>
     </div>

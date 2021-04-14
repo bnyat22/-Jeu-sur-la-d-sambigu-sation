@@ -43,7 +43,7 @@
             class="bar1"></span> <span class="bar2"></span> <span class="bar3"></span></button>
     <div id="my-nav" class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/auth/'|">Acceuil</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/'|">Acceuil</a></li>
             <li class="nav-item"><a class="nav-link" href="#" sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|window.location.href= '/admin/'|">Admin</a></li>
             <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
@@ -51,6 +51,7 @@
         <form class="form-inline my-2 my-lg-0">
             <a href="#" class="btn btn-outline-dark my-2 my-sm-0 mr-3 text-uppercase" sec:authorize="isAnonymous()" th:onclick="|window.location.href= '/auth/'|">Se connecter</a>
             <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAnonymous()" th:onclick="|window.location.href= '/auth/reg'|">S'inscrire</a>
+            <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/me'|">Profile</a>
             <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/auth/logout'|">Logout</a>
         </form>
     </div>

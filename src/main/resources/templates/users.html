@@ -47,7 +47,7 @@
 
         <div id="my-nav" class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/auth/'|">Acceuil</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/'|">Acceuil</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|window.location.href= '/admin/'|">Admin</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
             </ul>
@@ -55,6 +55,7 @@
             <form class="form-inline my-2 my-lg-0">
                 <a href="#" class="btn btn-outline-dark my-2 my-sm-0 mr-3 text-uppercase" sec:authorize="isAnonymous()" th:onclick="|window.location.href= '/auth/'|">Se connecter</a>
                 <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAnonymous()" th:onclick="|window.location.href= '/auth/reg'|">S'inscrire</a>
+                <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/me'|">Profile</a>
                 <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/auth/logout'|">Logout</a>
             </form>
         </div>
@@ -63,14 +64,8 @@
 <div class="container-fluid gtco-banner-area">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <h1> Bienvenue dans
-                    notre <span>JEU D'ANNOTATION</span>  </h1>
-                <h3>"Un <span>avocat</span> se retrouve par terre"</h3>
-                <p> Parle-t-on du fruit, de l'homme ou d'autre chose ?</p>
-
-                <p>À vous de choisir en mettant le sens qui vous semble le plus approprié ;) </p>
-                <div class="container">
+            <div class="section2">
+                <h1> Gestion d'utilisatuer </h1>
                     <div th:if="${not #lists.isEmpty(allusers)}">
                         <table class="table table-striped">
                             <thead>
@@ -89,17 +84,31 @@
                                 <th:block th:each="r : ${u.getRoles()}">
                                     <td th:text="${r.getName()}" ></td>
                                 </th:block>
+                                <td>
+                                    <form method="post" th:action="@{/admin/deleteuser}" th:object="${user}">
+                                        <select hidden="hidden" th:field="*{pseudo}" >
+                                            <option hidden="hidden" th:value="${u.getPseudo()}" selected/>
+                                        </select>
+                                            <button class="btn btn-danger small rounded-circle fa fa-close" type="submit" />
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method="post" th:action="@{/admin/makeadmen}" th:object="${user}">
+                                        <select hidden="hidden" th:field="*{pseudo}" >
+                                            <option hidden="hidden" th:value="${u.getPseudo()}" selected/>
+                                        </select>
+                                        <button class="btn btn-warning small rounded-circle" type="submit" th:text="A" />
+                                    </form>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card"><img class="card-img-top img-fluid" src="images/fini.png" alt=""></div>
-                </div>
+
             </div>
         </div>
-    </div>
+</div>
 
 
 

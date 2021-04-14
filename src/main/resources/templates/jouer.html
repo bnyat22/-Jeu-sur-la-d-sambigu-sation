@@ -29,11 +29,11 @@
     <!-- owl stylesheets -->
     <link rel="stylesheet" th:href="@{/css2/owl.carousel.min.css}">
     <link rel="stylesheet" th:href="@{/css2/owl.theme.default.min.css}">
-	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-	<!-- owl stylesheets --> 
-	<link rel="stylesheet" th:href="@{css2/owl.carousel.min.css}">
-	<link rel="stylesheet" th:href="@{css2/owl.theme.default.min.css}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <!-- owl stylesheets -->
+    <link rel="stylesheet" th:href="@{css2/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{css2/owl.theme.default.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
     <title>Se connecter</title>
     <style>
 
@@ -43,9 +43,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light bg-transparent" id="gtco-main-nav">
     <a class="navbar-brand">Ambiguss</a>
     <br>
-    <a class="navbar-brand" th:text="*{jwt}"></a>
-        <button class="navbar-toggler" data-target="#my-nav" onclick="myFunction(this)" data-toggle="collapse"><span
-                class="bar1"></span> <span class="bar2"></span> <span class="bar3"></span></button>
+    <button class="navbar-toggler" data-target="#my-nav" onclick="myFunction(this)" data-toggle="collapse"><span
+            class="bar1"></span> <span class="bar2"></span> <span class="bar3"></span></button>
     <div id="my-nav" class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/auth/'|">Acceuil</a></li>
@@ -59,61 +58,108 @@
             <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/auth/logout'|">Logout</a>
         </form>
     </div>
-    
+
 </nav>
 
 
- <div class="services_section">
+<div class="services_section">
     <div class="container">
-      <h1 class="services_text"></h1>
+        <h1 class="services_text"></h1>
     </div>
-  </div>
+</div>
 <div class="login_section">
-		<div class="container">
-            <div class="row">
-			<h1 class="best_taital">Jouons</h1>
-			 <div class="box_main">
-
-		    </div>
-		    <div class="section2" >
-		    <br>
-		   <h1 align="center" th:if="${question.get(0).getPhrase()}" th:utext="${question.get(0).getPhrase()}">..</h1>
-
-		   <div id="Global">
-		    <form class="form-control" th:action="@{/main/choisir}" th:object="${options}" method="post">
-
-                <div th:each="mot , i : ${question}">
-                <label type="text"  th:text="${mot.getMot()}">..</label>
-    <select hidden="hidden" th:field="*{optionList[__${i.index}__].word}" >
-        <option hidden="hidden" th:value="${mot.getMot()}" selected/>
-    </select>
-
-		    <select th:name="bni" th:field="*{optionList[__${i.index}__].Choix}" class="form-control">
-		    <option th:name="op1" th:each="choix : ${mot.getChoix()}"th:utext="${choix}" th:value="${choix}" >..</option>
-		    </select>
-                    <label type="text" th:if="*{optionList[__${i.index}__].point}">Vous avez gagné </label>
-                    <label type="text" th:if="*{optionList[__${i.index}__].point}" th:text="*{optionList[__${i.index}__].point}" />
-                    <label type="text" th:if="*{optionList[__${i.index}__].point}">points</label>
-                </div>
-                <br>
-                    <div class="discover_bt"><button class="btn-facebook" type="submit" th:action="|window.location.href= '/main/choisir'|" th:if="${options.isValide} == false" >Valider</button></div>
-            </form>
-          </div>
-		    <div class="bt_main">
-		    	<div class="discover_bt"><button class="btn btn-outline-dark my-2 my-sm-0 mr-3 text-uppercase" th:onclick="|window.location.href= '/main/suivante'|" th:if="${options.isValide} == true">Suivante</button></div>
-		    </div>
-                 </div>
-             </div>
-
-		    <div class="services_section">
     <div class="container">
-      <h1 class="services_text"></h1>
-    </div>
-  </div>
-  <br><br>
+        <div class="row">
+            <h1 class="best_taital">Jouons</h1>
+            <div class="box_main">
 
-		</div>
-	</div>
+            </div>
+            <div class="section2" >
+                <br>
+                <h1 align="center" th:if="${question.get(0).getPhrase()}" th:utext="${question.get(0).getPhrase()}">..</h1>
+
+                <div id="Global">
+                    <form class="form-control" th:action="@{/main/choisir}" th:object="${options}" method="post">
+
+                        <div th:each="mot , i : ${question}">
+                            <label type="text"  th:text="${mot.getMot()}">..</label>
+                            <select hidden="hidden" th:field="*{optionList[__${i.index}__].word}" >
+                                <option hidden="hidden" th:value="${mot.getMot()}" selected/>
+                            </select>
+
+                            <select th:name="bni" th:field="*{optionList[__${i.index}__].Choix}" class="form-control">
+                                <option th:name="op1" th:each="choix : ${mot.getChoix()}"th:utext="${choix}" th:value="${choix}" >..</option>
+                            </select>
+                            <label type="text" th:if="*{optionList[__${i.index}__].point}">Vous avez gagné </label>
+                            <label type="text" th:if="*{optionList[__${i.index}__].point}" th:text="*{optionList[__${i.index}__].point}" />
+                            <label type="text" th:if="*{optionList[__${i.index}__].point}">points</label>
+                        </div>
+                        <br>
+                        <div class="discover_bt"><button class="btn btn-outline-dark my-2 my-sm-0 mr-3 text-uppercase" type="submit" th:action="|window.location.href= '/main/choisir'|" th:if="${options.isValide} == false" >Valider</button></div>
+                    </form>
+                </div>
+                <div class="bt_main">
+                    <div class="discover_bt"><button class="btn btn-outline-dark my-2 my-sm-0 mr-3 text-uppercase" th:onclick="|window.location.href= '/main/suivante'|" th:if="${options.isValide} == true">Suivante</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="section2">
+            <div class="bt_main">
+    <div class="discover_bt"><button class="btn btn-warning btn-block  my-2 my-sm-0 mr-lg-auto" th:onclick="|window.location.href= '/main/getGlose'|">ajouer une glose</button></div>
+            </div>
+    </div>
+    </div>
+</div>
+    <div class="container" th:if="${glose}">
+        <div class="row">
+            <div class="section2">
+                <div class="card-body">
+                    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                        <div class="card card-signin my-5">
+                            <div class="card-body">
+                                <div class="form-label-group">
+                                    <label class="text-danger" th:if="${place}" th:text="${place}"></label>
+                                    <br><br>
+                                </div>
+                                <div class="form-label-group">
+                                    <label class="text-success" th:if="${suc}" th:text="${suc}"></label>
+                                    <br>
+                                </div>
+
+            <form method="post" class="container" th:action="@{/main/addGlose}" th:if="${glose}" th:object="${glose}">
+                <select hidden="hidden" th:field="*{phrase}">
+                    <option hidden="hidden" th:value="${question.get(0).getPhrase()}" >..</option>
+                </select>
+                <div class="form-label-group">
+                    <input  type="text" id="m"  th:if="${glose}" th:field="*{mot}" placeholder="M" required autofocus>
+                    <label for="m">Mot</label>
+                </div>
+
+                <div class="form-label-group">
+                    <input type="text" id="glos"  th:if="${glose}" th:field="*{glose} "placeholder="G" required>
+                    <label for="glos">Glose</label>
+                </div>
+                <div class="form-label-group">
+                    <input type="text" id="p"  th:if="${glose}" th:field="*{point} "placeholder="P" required>
+                    <label for="p">Point</label>
+                </div>
+                <div class="form-label-group">
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Ajouter</button>
+                </div>
+            </form>
+                    <br> <br> <br> <br> <br> <br> <br> <br><br> <br> <br>
+                            </div></div></div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <div class="container-fluid gtco-news" id="news">
 
@@ -151,9 +197,9 @@
                         </ul>
                     </div>
                     <div class="col-6">
-                       
+
                     </div>
-                 
+
                 </div>
             </div>
         </div>
@@ -177,7 +223,7 @@
 <script th:src="@{/js2/custom.js}"></script>
 <!-- javascript -->
 <script th:src="@{/js2/owl.carousel.js}"></script>
-      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+<script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 

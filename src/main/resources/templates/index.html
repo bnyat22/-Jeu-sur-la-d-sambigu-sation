@@ -47,18 +47,15 @@
 
         <div id="my-nav" class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/auth/'|">Acceuil</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/'|">Acceuil</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|window.location.href= '/admin/'|">Admin</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
             </ul>
-            <div sec:authorize="isAuthenticated()">
-                Authenticated user roles:
-                Logged user: <span sec:authentication="name"></span> |
-                Roles: <span sec:authentication="principal.authorities"></span>
-            </div>
+
             <form class="form-inline my-2 my-lg-0">
                 <a href="#" class="btn btn-outline-dark my-2 my-sm-0 mr-3 text-uppercase" sec:authorize="isAnonymous()" th:onclick="|window.location.href= '/auth/'|">Se connecter</a>
                 <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAnonymous()" th:onclick="|window.location.href= '/auth/reg'|">S'inscrire</a>
+                <a href="#" class="btn btn-outline-dark my-2 my-sm-0 mr-3 text-uppercase"  sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/me'|">Profil</a>
                 <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/auth/logout'|">Logout</a>
             </form>
         </div>
@@ -68,20 +65,21 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h1> Bienvenue dans
-                    notre <span>JEU D'ANNOTATION</span>  </h1>
+                <h1> Bienvenue
+                    <span sec:authentication="name"></span>
+                dans notre <span>JEU D'ANNOTATION</span>  </h1>
                     <h3>"Un <span>avocat</span> se retrouve par terre"</h3>
                 <p> Parle-t-on du fruit, de l'homme ou d'autre chose ?</p>
 
 <p>À vous de choisir en mettant le sens qui vous semble le plus approprié ;) </p>
 
                 <a href="#" sec:authorize= "isAuthenticated()" th:onclick="|window.location.href= '/main/commence'|">Jouer <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                <a href="#" sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/rank/get'|">Rank <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                <a href="#" sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/ajoute/getAjoute'|">Ajouter une phrase<i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                <a href="#" sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/ajoute/getGlose'|">Ajouter une glose <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                <a href="#" sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/rank/get'|">Rank <i class="fa fa-angle-right" aria-hidden="true"></i></a><br>
+                <a href="#"  sec:authorize="hasAnyRole('ROLE_ADMIN' , 'ROLE_EXPERT')"  th:onclick="|window.location.href= '/ajoute/getAjoute'|">Ajouter une phrase<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+
             </div>
             <div class="col-md-6">
-                <div class="card"><img class="card-img-top img-fluid" src="images/fini.png" alt=""></div>
+                <div class="card"><img class="card-img-top img-fluid" th:src="@{images/fini.png}" alt=""></div>
             </div>
         </div>
     </div>

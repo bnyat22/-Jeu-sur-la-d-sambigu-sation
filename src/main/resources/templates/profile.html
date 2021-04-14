@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <!-- Required meta tags -->
@@ -33,61 +33,95 @@
     <!-- owl stylesheets -->
     <link rel="stylesheet" th:href="@{css2/owl.carousel.min.css}">
     <link rel="stylesheet" th:href="@{css2/owl.theme.default.min.css}">
-    <title>Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <title>Se connecter</title>
     <style>
 
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light bg-transparent" id="gtco-main-nav">
-    <div class="container"><a class="navbar-brand">Ambiguss</a>
-        <br>
-        <button class="navbar-toggler" data-target="#my-nav" onclick="myFunction(this)" data-toggle="collapse"><span
-                class="bar1"></span> <span class="bar2"></span> <span class="bar3"></span></button>
+    <a class="navbar-brand">Ambiguss</a>
+    <br>
+    <button class="navbar-toggler" data-target="#my-nav" onclick="myFunction(this)" data-toggle="collapse"><span
+            class="bar1"></span> <span class="bar2"></span> <span class="bar3"></span></button>
+    <div id="my-nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/'|">Acceuil</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|window.location.href= '/admin/'|">Admin</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
 
-        <div id="my-nav" class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="#" th:onclick="|window.location.href= '/'|">Acceuil</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|window.location.href= '/admin/'|">Admin</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-            </ul>
-            <div sec:authorize="isAuthenticated()">
-                Authenticated user roles:
-                Logged user: <span sec:authentication="name"></span> |
-                Roles: <span sec:authentication="principal.authorities"></span>
-            </div>
-            <form class="form-inline my-2 my-lg-0">
-                <a href="#" class="btn btn-outline-dark my-2 my-sm-0 mr-3 text-uppercase" sec:authorize="isAnonymous()" th:onclick="|window.location.href= '/auth/'|">Se connecter</a>
-                <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAnonymous()" th:onclick="|window.location.href= '/auth/reg'|">S'inscrire</a>
-                <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/auth/logout'|">Logout</a>
-            </form>
-        </div>
+        <form class="form-inline my-2 my-lg-0">
+            <a href="#" class="btn btn-outline-dark my-2 my-sm-0 mr-3 text-uppercase" sec:authorize="isAnonymous()" th:onclick="|window.location.href= '/auth/'|">Se connecter</a>
+            <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAnonymous()" th:onclick="|window.location.href= '/auth/reg'|">S'inscrire</a>
+            <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/me'|">Profile</a>
+            <a href="#" class="btn btn-info my-2 my-sm-0 text-uppercase"  sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/auth/logout'|">Logout</a>
+        </form>
     </div>
+
 </nav>
-<div class="container-fluid gtco-banner-area">
+
+
+<div class="services_section">
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h1>Désolé</span>  </h1>
-
-
-                <p>Votre demarche n'a pas réussi</p>
-
-
-                <a href="#" sec:authorize="isAuthenticated()" th:onclick="|window.location.href= '/'|">Retounrez<i class="fa fa-angle-right" aria-hidden="true"></i></a>
-            </div>
-            <div class="col-md-6">
-                <div class="card"><img class="card-img-top img-fluid" src="images/fini.png" alt=""></div>
-            </div>
-        </div>
+        <h1 class="services_text"></h1>
     </div>
 </div>
+<div class="login_section">
+    <div class="container">
+        <div class="row">
+            <h1 class="best_taital">Votre Profil</h1>
+            <div class="box_main">
+
+            </div>
+            <div class="section2" >
+                <br>
+                <div id="Global">
 
 
+                        <label type="text" class="text-info" >Identificateur:</label>
+                            <label class="text-info"  th:text="${profil.getId()}"></label>
+                            <br>
+                        <label class="text-info" >Pseudo:</label>
+                        <label type="text"  th:text="${profil.getPseudo()}"></label>
+                        <br>
+                        <label class="text-info" >Email:</label>
+                        <label type="text"  th:text="${profil.getEmail()}"></label>
+                        <br>
+                        <label class="text-info" >Point:</label>
+                        <label type="text"  th:text="${profil.getPoints()}"></label>
+                        <br>
+                        <label class="text-info" >Credit:</label>
+                        <label type="text"  th:text="${profil.getCredit()}"></label>
+                        <br>
+                        <label class="text-info" >Nombre de phrases:</label>
+                        <label type="text"  th:text="${profil.getNPhrase()}"></label>
+                        <br>
+                        <label class="text-info" >Nombre de gloses:</label>
+                        <label type="text"  th:text="${profil.getNGlose()}"></label>
+                        <br>
+                        <div class="bt_main">
+                            <div class="discover_bt"><button class="btn-lg btn-primary btn-block text-uppercase" type="submit" th:action="|window.location.href= '/'|">Retounez</button></div>
+                        </div>
 
+                </div>
 
+            </div>
+        </div>
 
+        <div class="services_section">
+            <div class="container">
+                <h1 class="services_text"></h1>
+            </div>
+        </div>
+        <br><br>
+
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <div class="container-fluid gtco-news" id="news">
+
 
 
 </div>
@@ -124,15 +158,12 @@
                     <div class="col-6">
 
                     </div>
-                    <div class="col-12">
-                        <p></p>
-                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </footer>
-
 <script th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
@@ -151,5 +182,37 @@
 <script th:src="@{/js2/custom.js}"></script>
 <!-- javascript -->
 <script th:src="@{/js2/owl.carousel.js}"></script>
+<script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    function createLocalstorageItem(txtJwtTokenValue) {
+        sessionStorage.setItem("jwtToken", txtJwtTokenValue);
+    }
+
+    function readValue() {
+        var jwtToken = sessionStorage.getItem("jwtToken");
+        console.log("jwtToken : "+jwtToken );
+        return jwtToken ;
+
+    }
+
+    function getDataFromAPiByPassingJwtTokenInHeader(){
+        var jwtToken=readValue();
+        $.ajax({
+            url: 'http://localhost:9656/main/choisir',
+            type: 'post',
+            data: {},
+            headers: {
+                Bearer : "Bearer "+ jwtToken;  //key word **Bearer**  should pass before the token string
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.info(data);
+            }
+        });
+    }
+
+</script>
 </body>
 </html>
