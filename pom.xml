@@ -99,13 +99,6 @@
                         <groupId>etu</groupId>
                         <artifactId>demo</artifactId>
                         <version>0.0.1-SNAPSHOT</version>
-                        <configuration>
-                            <processTypes>
-                                <web>java $JAVA_OPTS -Dserver.port=$PORT -cp
-                                    target/classes:target/dependency/*
-                                    de.codeboje.springbootbook.commentstore.CommentStoreApp</web>
-                            </processTypes>
-                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
